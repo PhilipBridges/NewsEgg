@@ -7,7 +7,7 @@ import Popular from '../components/Popular'
 
 import { AppBar, Toolbar, Typography } from '@material-ui/core/';
 
-const newsapi = new NewsAPI('0e8cb43829c64f21b5a4dc1c58bbb571');
+const newsapi = new NewsAPI("0e8cb43829c64f21b5a4dc1c58bbb571");
 
 class Index extends React.Component {
   state = {
@@ -21,7 +21,6 @@ class Index extends React.Component {
 
   getData = async () => {
     let date = moment().format("YYYY-MM-DD")
-    console.log(date)
     let res = newsapi.v2.everything({
       sources: 'google-news',
       from: date,
@@ -88,7 +87,7 @@ class Index extends React.Component {
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
         <AppBar color="default" position="static">
           <Toolbar>
-            <Typography style={{paddingRight: '10px'}} variant="display1" color="inherit">
+            <Typography style={{ fontFamily: 'Georgia', paddingRight: '15px', fontWeight: 'bold' }} variant="display1" color="inherit">
               News Egg
           </Typography>
             <Popular searchData={this.searchData} />

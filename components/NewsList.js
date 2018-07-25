@@ -12,15 +12,17 @@ const NewsList = (props) => <List>
           <ListItemText primary={article.title}
             secondary={article.author !== null ?
               `${article.source.name} - ${article.author} @ ${moment(article.publishedAt).format('MMMM Do, h:mm:ss a')}`
-            :
+              :
               `${article.source.name} @ ${moment(article.publishedAt).format('MMMM Do, h:mm:ss a')}`
-          } />
+            } />
         </a>
       </Link>
     </ListItem>
   ))}
-  <Button variant="contained" onClick={() => props.prevPage()}>Previous</Button>
-  <Button variant="contained" onClick={() => props.nextPage()}>Next</Button>
+  <div style={{paddingLeft: '60px', paddingTop: '10px'}} >
+    <Button variant="contained" onClick={() => props.prevPage()}>Previous</Button>
+    <Button variant="contained" onClick={() => props.nextPage()}>Next</Button>
+  </div>
 </List>
 
 export default NewsList
