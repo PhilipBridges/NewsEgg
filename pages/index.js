@@ -8,7 +8,14 @@ import Selector from '../components/Selector'
 
 import { AppBar, Toolbar, Typography } from '@material-ui/core/';
 
+
 const newsapi = new NewsAPI("0e8cb43829c64f21b5a4dc1c58bbb571");
+
+const components = {
+  sm: 'em',
+  md: 'u',
+  lg: 'del',
+};
 
 class Index extends React.Component {
   state = {
@@ -94,7 +101,7 @@ class Index extends React.Component {
       <div>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-        <AppBar color="default" position="static">
+        <AppBar color="default" position="static" >
           <Toolbar variant='dense'>
             <Typography style={{ fontFamily: 'Georgia', paddingRight: '15px', fontWeight: 'bold' }} variant="display1" color="inherit">
               News Egg
@@ -106,9 +113,7 @@ class Index extends React.Component {
         <Selector sort={this.state.sort} handleChange={this.handleChange} />
         {this.state.articles.length > 1 ? <NewsList prevPage={this.prevPage} nextPage={this.nextPage} articles={this.state.articles} />
           :
-          <div>
-            
-          </div>
+          <div> </div>
         }
 
         <style global jsx>{`

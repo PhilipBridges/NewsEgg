@@ -1,4 +1,13 @@
 import { Button } from '@material-ui/core/';
+import withWidth from '@material-ui/core/withWidth';
+
+const style = {
+  display: 'flex',
+  justifyContent: 'space-evenly',
+  flexGrow: 1,
+  flexWrap: 'wrapReverse',
+  flexDirection: 'column',
+}
 
 class Bar extends React.Component {
   state = {
@@ -11,8 +20,9 @@ class Bar extends React.Component {
   }
 
   render() {
+    const { width } = this.props
     return (
-      <div style={{ display: 'flex', justifyContent: 'space-evenly', flexGrow: 1 }}>
+      <div style={width === 'xs' ? style : null}>
         <Button style={{backgroundColor: '#8bffd61a'}} variant="contained" onClick={this.handleClick} value="google-news">Google</Button>
         <Button style={{backgroundColor: '#8bffd61a'}} variant="contained" onClick={this.handleClick} value="bbc-news">BBC</Button>
         <Button style={{backgroundColor: '#8bffd61a'}} variant="contained" onClick={this.handleClick} value="CNN">CNN</Button>
@@ -26,4 +36,4 @@ class Bar extends React.Component {
   }
 }
 
-export default Bar
+export default withWidth()(Bar)

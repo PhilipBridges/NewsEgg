@@ -11,9 +11,10 @@ class Bar extends React.Component {
 
   render() {
     return (
-      <FormControl  >
-        <form style={{marginRight: '-10px', paddingLeft: '10px'}} onSubmit={this.props.searchData} >
+      <FormControl>
+        <form style={{display: 'flex', marginRight: '-10px', paddingLeft: '10px'}} onSubmit={this.props.searchData} >
           <Input
+            style={{display: 'inline-grid'}}
             onChange={this.onChange}
             value={this.state.search}
             placeholder="Search"
