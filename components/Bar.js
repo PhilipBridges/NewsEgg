@@ -16,7 +16,7 @@ class Bar extends React.Component {
           <Input
             onChange={this.onChange}
             value={this.state.search}
-            placeholder="Search for a Source"
+            placeholder="Search"
           />
           <Button type="submit">Search</Button>
         </form>

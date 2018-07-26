@@ -7,7 +7,7 @@ class Bar extends React.Component {
 
   handleClick = async (e) => {
     await this.setState({ search: e.target.value })
-    this.props.searchData({ text: this.state.search })
+    this.props.getData({ text: this.state.search })
   }
 
   render() {

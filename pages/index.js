@@ -4,6 +4,7 @@ import moment from 'moment'
 import NewsList from '../components/NewsList'
 import Bar from '../components/Bar'
 import Popular from '../components/Popular'
+import Selector from '../components/Selector'
 
 import { AppBar, Toolbar, Typography } from '@material-ui/core/';
 
@@ -13,53 +14,60 @@ class Index extends React.Component {
   state = {
     page: 1,
     articles: [],
+    sort: 'popularity',
+    source: 'reuters',
+    search: ''
   }
 
   componentDidMount() {
     this.getData()
   }
 
-  getData = async () => {
+  getData = async (e) => {
+    let source;
+    if (e && e.text) {
+      source = e.text
+    } else {
+      source = this.state.source
+    }
+
     let date = moment().format("YYYY-MM-DD")
     let res = newsapi.v2.everything({
-      sources: 'google-news',
+      q: this.state.search,
+      sources: source,
       from: date,
       to: '2018-12-12',
       page: this.state.page,
       language: 'en',
       pageSize: 10,
-      sortBy: 'popularity'
+      sortBy: this.state.sort
     })
 
     let data = await res
 
-    this.setState({ articles: data.articles })
+    this.setState({ articles: data.articles, source })
   }
 
   searchData = async (e) => {
+    e.preventDefault()
     let date = moment().format("YYYY-MM-DD")
     let search;
-
-    if (e.currentTarget) {
-      e.preventDefault()
-      search = e.currentTarget[0].value
-    } else {
-      search = e.text
-    }
+    search = e.currentTarget[0].value
 
     let res = newsapi.v2.everything({
-      sources: search,
+      q: search,
+      sources: this.state.source,
       from: date,
       to: '2018-12-12',
       page: this.state.page,
       language: 'en',
       pageSize: 10,
-      sortBy: 'popularity'
+      sortBy: this.state.sort
     })
 
     let data = await res
 
-    return this.setState({ articles: data.articles })
+    return this.setState({ articles: data.articles, search })
 
   }
 
@@ -76,25 +84,33 @@ class Index extends React.Component {
     return null
   }
 
-  render() {
-    if (this.state.articles.length < 1) {
-      return <div>Loading...</div>
-    }
+  handleChange = async (e) => {
+    await this.setState({ [e.target.name]: e.target.value })
+    this.getData()
+  }
 
+  render() {
     return (
       <div>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
         <AppBar color="default" position="static">
-          <Toolbar>
+          <Toolbar variant='dense'>
             <Typography style={{ fontFamily: 'Georgia', paddingRight: '15px', fontWeight: 'bold' }} variant="display1" color="inherit">
               News Egg
           </Typography>
-            <Popular searchData={this.searchData} />
+            <Popular getData={this.getData} />
             <Bar searchData={this.searchData} />
           </Toolbar>
         </AppBar>
-        <NewsList prevPage={this.prevPage} nextPage={this.nextPage} articles={this.state.articles} />
+        <Selector sort={this.state.sort} handleChange={this.handleChange} />
+        {this.state.articles.length > 1 ? <NewsList prevPage={this.prevPage} nextPage={this.nextPage} articles={this.state.articles} />
+          :
+          <div>
+            
+          </div>
+        }
+
         <style global jsx>{`
       body {
         font-family: 'Roboto';
